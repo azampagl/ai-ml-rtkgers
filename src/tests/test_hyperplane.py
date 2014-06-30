@@ -25,7 +25,7 @@ def test_hyperplane_simple():
   points.append(Point([1.0], 3.0))
   points.append(Point([3.0], 7.0))
 
-  hyperplane = Hyperplane(points)
+  hyperplane = Hyperplane.factory(points)
 
   # Round the coefficients to the nearest decimal.
   rounded_coefficients = \
@@ -47,7 +47,7 @@ def test_hyperplane_three_dimensional():
   points.append(Point([3.0, 4.0], 19))
   points.append(Point([4.0, 5.0], 24))
 
-  hyperplane = Hyperplane(points)
+  hyperplane = Hyperplane.factory(points)
 
   # Round the coefficients to the nearest decimal.
   rounded_coefficients = \
@@ -71,7 +71,7 @@ def test_hyperplane_insufficient_points():
   assert points[0].dimensions == 3
 
   with pytest.raises(HyperplaneException):
-    hyperplane = Hyperplane(points)
+    hyperplane = Hyperplane.factory(points)
 
 
 def test_hyperplane_linearly_dependent():
@@ -87,4 +87,4 @@ def test_hyperplane_linearly_dependent():
   assert points[0].dimensions == 3
 
   with pytest.raises(HyperplaneException):
-    hyperplane = Hyperplane(points)
+    hyperplane = Hyperplane.factory(points)

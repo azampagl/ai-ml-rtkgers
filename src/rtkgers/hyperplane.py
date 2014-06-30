@@ -22,13 +22,13 @@ class Hyperplane(object):
   provided.
   """
 
-
-  def __init__(self, points):
+  @staticmethod
+  def factory(points):
     """
-    Constructor.
+    Factory method that produces a hyperplane from points.
 
     Key arguments
-    points -- The points to a build a hyerplane from.
+    points -- The points to a build a hyperplane from.
     """
 
     # Make sure we have the minimum number of points necessary.
@@ -46,7 +46,18 @@ class Hyperplane(object):
     a = array([list(point.features) + [1.0] for point in points])
     b = array([point.solution for point in points])
 
-    self.coefficients = list(solve(a, b))
+    return Hyperplane(list(solve(a, b)))
+
+
+  def __init__(self, coefficients):
+    """
+    Constructor.
+
+    Key arguments
+    coefficients -- The coefficients of the linear equation for the hyperplane.
+    """
+
+    self.coefficients = coefficients
 
 
   def solve(self, point):
