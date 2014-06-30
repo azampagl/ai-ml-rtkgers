@@ -57,7 +57,7 @@ class Point(object):
   def features(self):
     """Return the feature set."""
 
-    return self.coordinates[0:-1]
+    return self.coordinates[:-1]
 
 
   @property
