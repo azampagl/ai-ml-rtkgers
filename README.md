@@ -1,4 +1,4 @@
-ai-ml-rtkgers
+RTKGERS
 =============
 
 A hyperplane regression tree learning algorithm (RTKGERS).
