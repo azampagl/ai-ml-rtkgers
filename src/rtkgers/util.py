@@ -20,5 +20,6 @@ def sample(points, size, exclude = []):
   size    -- The number of points to return.
   exclude -- The set of points to NOT include.
   """
+
   # Take a random sampling, but do not include the excluded group.
   return random.sample(set(points).difference(set(exclude)), size)
