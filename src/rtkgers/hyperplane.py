@@ -51,7 +51,18 @@ class Hyperplane(object):
 
   def solve(self, point):
     """
-    Given a set a point (set of features), return the predicted solution.
+    Given a point (set of features), return the predicted solution.
+
+    E.g.
+
+      The hyperplane has coefficients [3.0, 2.0, 1.0] (3.0x + 2.0y + 1.0).
+
+      A point with values [4.0, 5.0] (x, y) is provided.
+
+      solve(Point([4.0, 5.0])) =>
+
+        (3.0 x 4.0) + (2.0 x 5.0) + 1.0 => 23.0
+
     """
 
     return sum([a * b for a, b in zip(self.coefficients[:-1], point.features)]) \
