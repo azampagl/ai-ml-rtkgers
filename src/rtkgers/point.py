@@ -8,7 +8,7 @@ The style guide follows the strict python PEP 8 guidelines.
 @requires Python >=2.7
 @copyright 2014 - Present Aaron Zampaglione
 """
-
+import numpy as np
 
 class Point(object):
   """
@@ -24,6 +24,10 @@ class Point(object):
   point.solution = z
   """
 
+  # The data type for the coordinates of a point.
+  DTYPE = np.dtype(float)
+
+
   def __init__(self, features, solution = None):
     """
     Constructor.
@@ -37,11 +41,11 @@ class Point(object):
                 the solution would be "z".
     """
 
-    # Copy over the original features set.
-    self.coordinates = list(features)
+    # The coordinates are the features plus the solution as the last element.
+    coordinates = list(features) + [solution]
 
-    # Append the solution to the end of the coodinates list.
-    self.coordinates.append(solution)
+    # Copy over the original features set.
+    self.coordinates = np.array(coordinates, dtype=Point.DTYPE)
 
     # Find the dimensions of the point.
     self.dimensions = len(self.coordinates)

@@ -43,9 +43,9 @@ def test_hyperplane_three_dimensional():
   # Make three points for a three dimensional
   #  space for equation 3x + 2y + 2 = z
   points = []
-  points.append(Point([2.0, 2.0], 12))
-  points.append(Point([3.0, 4.0], 19))
-  points.append(Point([4.0, 5.0], 24))
+  points.append(Point([2.0, 2.0], 12.0))
+  points.append(Point([3.0, 4.0], 19.0))
+  points.append(Point([4.0, 5.0], 24.0))
 
   hyperplane = Hyperplane.factory(points)
 
@@ -53,7 +53,8 @@ def test_hyperplane_three_dimensional():
   rounded_coefficients = \
     [round(coefficient) for coefficient in hyperplane.coefficients]
 
-  assert hyperplane.coefficients == [3.0, 2.0, 2.0]
+  assert hyperplane.coefficients.dtype.type is Point.DTYPE.type
+  assert (hyperplane.coefficients == [3.0, 2.0, 2.0]).all()
 
   # 3(5) + 2(6) + 2 = 29
   assert hyperplane.solve(Point([5.0, 6.0])) == 29.0

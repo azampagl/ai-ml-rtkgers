@@ -8,11 +8,10 @@ The style guide follows the strict python PEP 8 guidelines.
 @requires Python >=2.7
 @copyright 2014 - Present Aaron Zampaglione
 """
-from scipy import array
-from scipy.linalg import det
-from scipy.linalg import solve
+import numpy as np
 
 from exceptions.hyperplane import HyperplaneException
+from point import Point
 
 class Hyperplane(object):
   """
@@ -38,15 +37,26 @@ class Hyperplane(object):
       )
 
     # Make sure we are provided with a full rank matrix.
-    points_as_array = array([point.coordinates for point in points])
-    if round(det(points_as_array, 1)) == 0.0:
+    points_as_array = np.array(
+      [point.coordinates for point in points],
+      dtype=Point.DTYPE
+      )
+
+    if round(np.linalg.det(points_as_array), 1) == 0.0:
       raise HyperplaneException("The points provided are linearly dependent.")
 
     # Build our linear equation matrix
-    a = array([list(point.features) + [1.0] for point in points])
-    b = array([point.solution for point in points])
+    a = np.array(
+      [np.append(point.features, [1.0]) for point in points],
+      dtype=Point.DTYPE
+      )
 
-    return Hyperplane(list(solve(a, b)))
+    b = np.array(
+      [point.solution for point in points],
+      dtype=Point.DTYPE
+      )
+
+    return Hyperplane(np.linalg.solve(a, b))
 
 
   def __init__(self, coefficients):
