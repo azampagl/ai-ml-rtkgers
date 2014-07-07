@@ -41,11 +41,11 @@ class Point(object):
                 the solution would be "z".
     """
 
-    # The coordinates are the features plus the solution as the last element.
-    coordinates = list(features) + [solution]
+    # Make a high-performance array from the features.
+    self.features = np.array(features, dtype=Point.DTYPE)
 
-    # Copy over the original features set.
-    self.coordinates = np.array(coordinates, dtype=Point.DTYPE)
+    # Store the solution.
+    self.solution = solution
 
     # Find the dimensions of the point.
     self.dimensions = len(self.coordinates)
@@ -58,21 +58,7 @@ class Point(object):
 
 
   @property
-  def features(self):
-    """Return the feature set."""
+  def coordinates(self):
+    """Returns the features and solution as a coordinate array."""
 
-    return self.coordinates[:-1]
-
-
-  @property
-  def solution(self):
-    """Gets the solution."""
-
-    return self.coordinates[-1]
-
-
-  @solution.setter
-  def solution(self, value):
-    """Sets the solution."""
-
-    self.coordinates[-1] = value
+    return np.append(self.features, [self.solution])

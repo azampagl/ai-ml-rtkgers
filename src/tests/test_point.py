@@ -20,7 +20,7 @@ def test_point_default():
   point = Point([1.0, 2.0])
 
   assert (point.features == [1.0, 2.0]).all()
-  assert np.isnan(point.solution)
+  assert point.solution == None
 
 
 def test_point_with_solution():
