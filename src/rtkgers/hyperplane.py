@@ -104,18 +104,20 @@ class Hyperplane(object):
       [point.solution for point in points],
       dtype=Point.DTYPE)
 
-    return Hyperplane(np.linalg.lstsq(a, b)[0])
+    return Hyperplane(np.linalg.lstsq(a, b)[0], points)
 
 
-  def __init__(self, coefficients):
+  def __init__(self, coefficients, points):
     """
     Constructor.
 
     Key arguments:
     coefficients -- The coefficients of the linear equation for the hyperplane.
+    points       -- The points used to produce this hyperplane.
     """
 
     self.coefficients = coefficients
+    self.points = points
 
 
   def solve(self, point):
