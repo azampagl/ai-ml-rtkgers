@@ -9,6 +9,6 @@ The style guide follows the strict python PEP 8 guidelines.
 @copyright 2014 - Present Aaron Zampaglione
 """
 
-class HyperplaneException(Exception):
-  """A Hyperplane exception."""
+class KGERSException(Exception):
+  """A KGERS exception."""
   pass
