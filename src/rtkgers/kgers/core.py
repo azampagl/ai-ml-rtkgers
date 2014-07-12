@@ -40,9 +40,6 @@ class KGERSCore(object):
     if (test == None and len(points) < 3 * (points[0].dimensions)):
       raise KGERSException("Not enough points to train on.")
 
-    # Initialize coefficients variable.
-    self.coefficients = []
-
     # Check if we need to generate the test set.
     if (test == None):
       # Take 30% of the data set for testing, or the minimum required.

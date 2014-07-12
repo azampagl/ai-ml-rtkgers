@@ -1,5 +1,5 @@
 """
-Test the utility methods.
+Test the math utility methods.
 
 The style guide follows the strict python PEP 8 guidelines.
 @see http://www.python.org/dev/peps/pep-0008/
@@ -8,7 +8,7 @@ The style guide follows the strict python PEP 8 guidelines.
 @requires Python >=2.7
 @copyright 2014 - Present Aaron Zampaglione
 """
-from rtkgers.util import sample
+from rtkgers.utils.math import sample
 
 
 def test_sample_simple():

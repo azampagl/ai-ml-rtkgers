@@ -10,7 +10,7 @@ The style guide follows the strict python PEP 8 guidelines.
 """
 import numpy as np
 
-import util
+import utils
 
 from exceptions.hyperplane import HyperplaneException
 from point import Point
@@ -49,7 +49,7 @@ class Hyperplane(object):
     num_to_sample = points[0].dimensions
 
     # Grab a set of samples from the data set.
-    samples = util.sample(points, num_to_sample)
+    samples = utils.math.sample(points, num_to_sample)
 
     # Keep trying to generate a hyperplane
     #  until one is successfully created.
@@ -63,7 +63,7 @@ class Hyperplane(object):
         break
       except HyperplaneException, e:
         count += 1
-        samples = util.sample(points, num_to_sample)
+        samples = utils.math.sample(points, num_to_sample)
 
     if (count >= Hyperplane.MAX_SAMPLE_ATTEMPTS):
       raise HyperplaneException(
