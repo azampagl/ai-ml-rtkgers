@@ -8,11 +8,13 @@ The style guide follows the strict python PEP 8 guidelines.
 @requires Python >=2.7
 @copyright 2014 - Present Aaron Zampaglione
 """
-import utils
+import rtkgers.utils.math as MathUtils
+import rtkgers.utils.hyperplane as HyperplaneUtils
 
-from kgers.core import KGERSCore
-from hyperplane import Hyperplane
-from exceptions.hyperplane import HyperplaneException
+from rtkgers.hyperplane import Hyperplane
+from rtkgers.kgers.core import KGERSCore
+
+from rtkgers.exceptions.hyperplane import HyperplaneException
 
 
 class KGERSOriginal(KGERSCore):
@@ -25,19 +27,25 @@ class KGERSOriginal(KGERSCore):
     """
     """
 
+    # Determine the dimension so we can determine how many points
+    #  for validation.
+    dimensions = self.training[0].dimensions
     hyperplanes = []
     weights = []
 
-    for i in range(0, 10):
+    for i in range(0, self.config.getint('KGERS', 'K')):
       # Create a hyperplane from the training points.
       hyperplane = Hyperplane.sample(self.training)
 
       # Grab a set of validators that are not in the training set.
-      validation = utils.math.sample(self.training, exclude=hyperplane.points)
+      validators = MathUtils.sample(
+        self.training,
+        dimensions,
+        exclude=hyperplane.points)
 
       hyperplanes.append(hyperplane)
 
       # Find the weight for this hyperplane.
-      weights.append(utils.hyperplane.weigh(hyperplane, validators))
+      weights.append(HyperplaneUtils.weigh(hyperplane, validators))
 
-    self.coefficients = utils.hyperplane.average(hyperplanes, weights)
+    self.coefficients = HyperplaneUtils.average(hyperplanes, weights)

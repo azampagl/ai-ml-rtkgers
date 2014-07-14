@@ -12,21 +12,35 @@ import abc
 import math
 import random
 
-import util
+import rtkgers.utils.math as MathUtils
 
-from exceptions.kgers import KGERSException
-from hyperplane import Hyperplane
+from rtkgers.hyperplane import Hyperplane
+
+from rtkgers.exceptions.kgers import KGERSException
+
 
 
 class KGERSCore(object):
   """
+  The KGERS core class contains methods that pertain to all extensions,
+  e.g. finding the error based on the test set.
   """
   __metaclass__ = abc.ABCMeta
 
 
-  def __init__(self, points, test = None):
+  def __init__(self, config, points, test = None):
     """
+    Contructor.
+
+    Key arguments:
+    points -- The points to train on.
+    test   -- The points to test against. If this is not provided,
+    approximately 30 percent of the points provided will be used
+    for test.
     """
+
+    # Save the configuration.
+    self.config = config
 
     # Make sure we have more than one point.
     if (len(points) == 0):
@@ -44,7 +58,7 @@ class KGERSCore(object):
     if (test == None):
       # Take 30% of the data set for testing, or the minimum required.
       num_of_test = max([int(len(points) * .3), points[0].dimensions])
-      test = util.sample(points, size=num_of_test)
+      test = MathUtils.sample(points, size=num_of_test)
 
     # Set the test set.
     self.test = test
