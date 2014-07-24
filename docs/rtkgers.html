@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>rtkgers.py</title>
+  <link rel="stylesheet" href="pycco.css">
+</head>
+<body>
+<div id="background"></div>
+<div id='container'>
+  <div class='section'>
+    <div class='docs'><h1>rtkgers.py</h1></div>
+  </div>
+  <div class='clearall'>
+  <div class='section' id='section-0'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-0'>#</a>
+      </div>
+      <p>Main execution script.</p>
+<p>The style guide follows the strict python PEP 8 guidelines.
+@see http://www.python.org/dev/peps/pep-0008/</p>
+<p>@author Aaron Zampaglione <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#122;&#97;&#109;&#112;&#97;&#103;&#108;&#64;&#97;&#122;&#97;&#109;&#112;&#97;&#103;&#108;&#46;&#99;&#111;&#109;">&#97;&#122;&#97;&#109;&#112;&#97;&#103;&#108;&#64;&#97;&#122;&#97;&#109;&#112;&#97;&#103;&#108;&#46;&#99;&#111;&#109;</a>
+@requires Python &gt;=2.7
+@copyright 2014 - Present Aaron Zampaglione</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">rtkgers.point</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="kn">from</span> <span class="nn">rtkgers.hyperplane</span> <span class="kn">import</span> <span class="n">Hyperplane</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-1'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-1'>#</a>
+      </div>
+      <p>Main execution.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">():</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-2'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-2'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-3'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-3'>#</a>
+      </div>
+      <p>Determine command line arguments.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">try</span><span class="p">:</span>
+    <span class="n">rawopts</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s">&#39;c:&#39;</span><span class="p">)</span>
+  <span class="k">except</span> <span class="n">getopt</span><span class="o">.</span><span class="n">GetoptError</span><span class="p">:</span>
+    <span class="n">usage</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+  <span class="n">opts</span> <span class="o">=</span> <span class="p">{}</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-4'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-4'>#</a>
+      </div>
+      <p>Process each command line argument.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">for</span> <span class="n">o</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">rawopts</span><span class="p">:</span>
+    <span class="n">opts</span><span class="p">[</span><span class="n">o</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">a</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-5'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-5'>#</a>
+      </div>
+      <p>The following arguments are required in all cases.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+      <span class="n">usage</span><span class="p">()</span>
+      <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-6'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-6'>#</a>
+      </div>
+      <p>Load in the configuration.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">opts</span><span class="p">[</span><span class="s">&#39;c&#39;</span><span class="p">])</span>
+
+  <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">([</span><span class="mf">1.0</span><span class="p">],</span> <span class="mf">3.0</span><span class="p">))</span>
+  <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Point</span><span class="p">([</span><span class="mf">3.0</span><span class="p">],</span> <span class="mf">7.0</span><span class="p">))</span>
+
+  <span class="n">hyperplane</span> <span class="o">=</span> <span class="n">Hyperplane</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="n">hyperplane</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-7'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-7'>#</a>
+      </div>
+      <p>Prints the usage of the program.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">usage</span><span class="p">():</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-8'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-8'>#</a>
+      </div>
+      <p>Main execution.</p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>  <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;The following are arguments required:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;</span><span class="se">\t</span><span class="s">-c: the path to the configuration file.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;Example Usage:</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;</span><span class="se">\t</span><span class="s">python rtkgers.py -c </span><span class="se">\&quot;</span><span class="s">config.cfg</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span>
+    <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-9'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-9'>#</a>
+      </div>
+      
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">main</span><span class="p">()</span>
+
+</pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+</div>
+</body>
