@@ -22,6 +22,10 @@ def config():
   """Returns the default configuration to use for the KGERS algorithm."""
 
   config = ConfigParser.RawConfigParser()
+
+  config.add_section('Main')
+  config.set('Main', 'MaxThreads', 4)
+
   config.add_section('KGERS')
   config.set('KGERS', 'K', 10)
 

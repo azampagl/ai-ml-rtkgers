@@ -1,5 +1,5 @@
 """
-Test the point class.
+See class summary.
 
 The style guide follows the strict python PEP 8 guidelines.
 @see http://www.python.org/dev/peps/pep-0008/

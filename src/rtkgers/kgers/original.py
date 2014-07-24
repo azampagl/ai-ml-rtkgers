@@ -11,6 +11,7 @@ The style guide follows the strict python PEP 8 guidelines.
 import rtkgers.utils.math as MathUtils
 import rtkgers.utils.hyperplane as HyperplaneUtils
 
+from rtkgers.exthread import ExThread
 from rtkgers.hyperplane import Hyperplane
 from rtkgers.kgers.core import KGERSCore
 
@@ -24,28 +25,70 @@ class KGERSOriginal(KGERSCore):
   """
 
   def execute(self):
-    """
-    """
+    """See parent class summary."""
 
-    # Determine the dimension so we can determine how many points
-    #  for validation.
-    dimensions = self.training[0].dimensions
     hyperplanes = []
     weights = []
 
+    workers = []
     for i in range(0, self.config.getint('KGERS', 'K')):
+      worker = KGERSOriginal.Worker(i, self.training)
+      worker.start()
+      workers.append(worker)
+
+    # Wait for all threads to complete.
+    #  If an exception occurs, catch only the latest one
+    #  and make sure all the threads finish out.
+    exception = None
+    for worker in workers:
+      try:
+        worker.join_with_exception()
+        hyperplanes.append(worker.hyperplane)
+        weights.append(worker.weight)
+      except Exception, ex:
+        exception = ex
+
+    # If there was an exception in any of the threads,
+    #  re-throw the latest one.
+    if exception:
+      raise exception
+
+    self.coefficients = HyperplaneUtils.average(hyperplanes, weights)
+
+
+  class Worker(ExThread):
+    """The worker thread for the container class."""
+
+
+    def __init__(self, uid, training):
+      """
+      Constructor.
+
+      Key arguments:
+      uid      -- The unique ID of the thread.
+      training -- The training set to use for this thread.
+      """
+
+      ExThread.__init__(self)
+      self.uid = uid
+      self.training = training
+      self.hyperplane = None
+      self.weight = None
+
+
+    def run_with_exception(self):
+      """Generates a hyperplane and determines the weight."""
+
       # Create a hyperplane from the training points.
       hyperplane = Hyperplane.sample(self.training)
 
       # Grab a set of validators that are not in the training set.
       validators = MathUtils.sample(
         self.training,
-        dimensions,
+        self.training[0].dimensions, # The number of point to sample is the dim.
         exclude=hyperplane.points)
 
-      hyperplanes.append(hyperplane)
+      self.hyperplane = hyperplane
 
       # Find the weight for this hyperplane.
-      weights.append(HyperplaneUtils.weigh(hyperplane, validators))
-
-    self.coefficients = HyperplaneUtils.average(hyperplanes, weights)
+      self.weight = HyperplaneUtils.weigh(hyperplane, validators)
