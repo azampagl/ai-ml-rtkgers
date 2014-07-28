@@ -10,7 +10,6 @@ The style guide follows the strict python PEP 8 guidelines.
 """
 import abc
 import math
-import random
 
 import rtkgers.utils.math as MathUtils
 
@@ -47,11 +46,11 @@ class KGERSCore(object):
       raise KGERSException("Not enough points provided.")
 
     # If a test set was provided, we only need 2 * (n + 1) points.
-    if (test != None and len(points) < 2 * (points[0].dimensions)):
+    if (test != None and len(points) < 2 * points[0].dimensions):
       raise KGERSException("Not enough points to train on.")
 
     # The test set needs to be generated here, we need at least 3 * (n + 1).
-    if (test == None and len(points) < 3 * (points[0].dimensions)):
+    if (test == None and len(points) < 3 * points[0].dimensions):
       raise KGERSException("Not enough points to train on.")
 
     # Check if we need to generate the test set.

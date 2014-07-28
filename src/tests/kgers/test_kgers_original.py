@@ -46,7 +46,8 @@ def test_kgers_perfect():
   points.append(Point([7.0, 8.0], 39.0))
   points.append(Point([8.0, 9.0], 44.0))
   points.append(Point([9.0, 10.0], 49.0))
-  points.append(Point([10.0, 11.0], 49.0))
+  points.append(Point([10.0, 11.0], 54.0))
+  points.append(Point([11.0, 12.0], 59.0))
 
   kgers = KGERSOriginal(config(), points)
   kgers.execute()
