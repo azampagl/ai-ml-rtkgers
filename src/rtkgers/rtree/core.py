@@ -54,6 +54,23 @@ class RTreeCore(object):
       sum([pow(self.solve(point) - point.solution, 2) for point in test]) /
       float(len(test)))
 
+  def hyperplane(self, point):
+    """
+    Returns the hyperplane to solve a point by recursively navigating the tree.
+
+    Key arguments:
+    point -- The point to analyze.
+    """
+
+    node = self.root
+    while (node.left != None and node.right != None):
+      if (point.features[node.feature] <= node.threshold):
+        node = node.left
+      else:
+        node = node.right
+
+    return node.hyperplane
+
 
   @abc.abstractmethod
   def grow(self, node, points):
@@ -87,11 +104,4 @@ class RTreeCore(object):
     point -- The point to analyze.
     """
 
-    node = self.root
-    while (node.left != None and node.right != None):
-      if (point.features[node.feature] <= node.threshold):
-        node = node.left
-      else:
-        node = node.right
-
-    return node.hyperplane.solve(point)
+    return self.hyperplane(point).solve(point)

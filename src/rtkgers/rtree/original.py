@@ -55,7 +55,6 @@ class RTreeOriginal(RTreeCore):
         error = (len(left_points) / float(len(points))) * left.error() + \
           (len(right_points) / float(len(points))) * right.error()
 
-        print str(best_error) + " - " + str(error)
         if (best_error > error):
           best_index = i
           best_feature = f
