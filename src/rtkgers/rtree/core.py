@@ -15,7 +15,6 @@ from rtkgers.kgers.original import KGERSOriginal
 from rtkgers.rtree.node import Node
 
 
-
 class RTreeCore(object):
   """
   The RTree core class contains methods that pertain to all recursive trees.
@@ -53,6 +52,7 @@ class RTreeCore(object):
     return math.sqrt(
       sum([pow(self.solve(point) - point.solution, 2) for point in test]) /
       float(len(test)))
+
 
   def hyperplane(self, point):
     """
