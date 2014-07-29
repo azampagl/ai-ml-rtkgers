@@ -60,7 +60,7 @@ def test_simple_line_perfect():
 
 
 def test_two_lines_perfect():
-  """Tests the recursive tree using a two perfect line."""
+  """Tests the recursive tree using two perfect line."""
 
   # Make nine points for a three dimensional
   #  space for equation 3x + 2y + 2 = z
