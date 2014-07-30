@@ -16,6 +16,7 @@ import sys
 
 import ConfigParser
 
+from rtkgers.hyperplane import Hyperplane
 from rtkgers.point import Point
 from rtkgers.rtree.original import RTreeOriginal
 
@@ -127,6 +128,9 @@ def train(config_filename, input_filename, output_filename):
     for row in reader:
       points.append(
         Point([float(feature) for feature in row[2:]], float(row[1])))
+
+  # Overload globals.
+  Hyperplane.MAX_SAMPLE_ATTEMPTS = config.get('KGERS', 'MaxHyperplaneAttempts')
 
   # Load the desired algorithm.
   algorithm = config.get('RTree', 'Algorithm')

@@ -12,6 +12,7 @@ import ConfigParser
 import numpy as np
 import pytest
 
+from rtkgers.hyperplane import Hyperplane
 from rtkgers.point import Point
 from rtkgers.kgers.original import KGERSOriginal
 
@@ -28,6 +29,8 @@ def config():
 
   config.add_section('KGERS')
   config.set('KGERS', 'K', 10)
+
+  Hyperplane.MAX_SAMPLE_ATTEMPTS = 200
 
   return config
 

@@ -12,6 +12,7 @@ import ConfigParser
 import numpy as np
 import pytest
 
+from rtkgers.hyperplane import Hyperplane
 from rtkgers.point import Point
 from rtkgers.kgers.weights import KGERSWeights
 
@@ -31,6 +32,8 @@ def config():
 
   config.add_section('KGERSWeights')
   config.set('KGERSWeights', 'Multiple', 2)
+
+  Hyperplane.MAX_SAMPLE_ATTEMPTS = 200
 
   return config
 
