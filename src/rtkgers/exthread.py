@@ -23,7 +23,7 @@ class ExThread(threading.Thread):
 
 
   # The max number of threads to run at one time.
-  Thread_Limit = threading.BoundedSemaphore(1)
+  Thread_Limit = threading.BoundedSemaphore(4)
 
 
   def __init__(self):
