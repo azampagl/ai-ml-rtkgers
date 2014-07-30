@@ -18,5 +18,11 @@ setup(
   author='Aaron Zampaglione',
   author_email='azampagl@azampagl.com',
   url='http://www.azampagl.com',
-  packages=['rtkgers'],
+  packages=[
+    'rtkgers',
+    'rtkgers/exceptions',
+    'rtkgers/kgers',
+    'rtkgers/rtree',
+    'rtkgers/utils'
+  ],
 )
