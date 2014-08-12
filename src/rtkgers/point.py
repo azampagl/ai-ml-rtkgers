@@ -62,3 +62,14 @@ class Point(object):
     """Returns the features and solution as a coordinate array."""
 
     return np.append(self.features, [self.solution])
+
+
+  def distance(self, point):
+    """
+    Returns the distance between this point and another point.
+
+    Key arguments:
+    point -- The other point to find the distance too.
+    """
+
+    return np.linalg.norm(self.coordinates - point.coordinates)
