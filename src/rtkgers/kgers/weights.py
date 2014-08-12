@@ -22,8 +22,8 @@ from rtkgers.exceptions.hyperplane import HyperplaneException
 
 class KGERSWeights(KGERSCore):
   """
-  The weights KGERS algorithm takes the top 50 percent of the hyperplanes
-  generated and
+  The weights KGERS algorithm takes the top X percent of the hyperplanes
+  generated ranked by their respective weights.
   """
 
   def execute(self):
